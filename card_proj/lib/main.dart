@@ -39,11 +39,15 @@ class MyApp extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 10.0,
+                height: 20.0,
+                width: 150.0,
+                child: Divider(
+                  color: Colors.teal[100],
+                ),
               ),
               Card(
                 elevation: 4.0,
-                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 40.0),
+                margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 40.0),
                 child: ListTile(
                   leading: Icon(
                     Icons.phone,
