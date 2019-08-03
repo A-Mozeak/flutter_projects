@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'question.dart';
+import 'quiz_brain.dart';
+
+QuizBrain qb = QuizBrain();
 
 void main() => runApp(Quizzical());
 
@@ -27,14 +29,19 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> score = [];
-  List<Question> questions = [
-    Question(q: 'You can lead a cow down stairs but not up stairs.', a: false),
-    Question(
-        q: 'Approximately one quarter of human bones are in the feet.',
-        a: true),
-    Question(q: 'A slug\'s blood is green.', a: true),
-  ];
   int questionNum = 0;
+  void rightAnswer(){
+    setState(() {
+      score.add(Icon(Icons.check, color: Colors.green));
+      questionNum++;
+    });
+  }
+  void wrongAnswer(){
+    setState(() {
+      score.add(Icon(Icons.close, color: Colors.red));
+      questionNum++;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +55,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questions[questionNum].questionText,
+                qb.questions[questionNum].questionText,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -72,10 +79,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  score.add(Icon(Icons.check, color: Colors.green));
-                  questionNum++;
-                });
+                (qb.questions[questionNum].questionAnswer == true) ? rightAnswer() : wrongAnswer();
               },
             ),
           ),
@@ -93,10 +97,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  score.add(Icon(Icons.close, color: Colors.red));
-                  questionNum++;
-                });
+                (qb.questions[questionNum].questionAnswer == false) ? rightAnswer() : wrongAnswer();
               },
             ),
           ),
