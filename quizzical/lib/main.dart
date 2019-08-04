@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'quiz_brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 QuizBrain qb = QuizBrain();
 
@@ -29,17 +30,34 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> score = [];
-  int questionNum = 0;
+
+  void checkAnswer(bool ans){
+    if(qb.isFinished()){
+      Alert(
+        context: context,
+        title: 'Quiz Complete!',
+        desc: 'You\'ve completed the quiz.'
+      ).show();
+      qb.reset();
+      setState(() {
+        score = [];
+      });
+
+    } else {
+      (qb.getQuestionAnswer() == ans) ? rightAnswer() : wrongAnswer();
+    }
+  }
+  
   void rightAnswer(){
     setState(() {
       score.add(Icon(Icons.check, color: Colors.green));
-      questionNum++;
+      qb.nextQuestion();
     });
   }
   void wrongAnswer(){
     setState(() {
       score.add(Icon(Icons.close, color: Colors.red));
-      questionNum++;
+      qb.nextQuestion();
     });
   }
 
@@ -55,7 +73,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                qb.getQuestionText(questionNum),
+                qb.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -79,7 +97,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                (qb.getQuestionAnswer(questionNum) == true) ? rightAnswer() : wrongAnswer();
+                checkAnswer(true);
               },
             ),
           ),
@@ -97,7 +115,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                (qb.getQuestionAnswer(questionNum) == false) ? rightAnswer() : wrongAnswer();
+                checkAnswer(false);
               },
             ),
           ),
