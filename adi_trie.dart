@@ -1,3 +1,39 @@
+/*
+NODE BASED, GENERIC IMPLEMENTATION
+
+class ADINode<E> {
+  E _data;
+  int _relations;
+  
+  ADINode(E datum){
+    this._data = datum;
+    this._relations = 0;
+  }
+  
+  E getData() => this._data;
+  void setData(E datum) => this._data = datum;
+  
+  int getRelations() => this._relations;
+  void setRelations(int relation) => this._relations |= relation;
+}
+
+class ADIGraph {
+  List<ADINode<String>> nodes;
+  
+  void addPerson({name: String}){
+    int duplicates = 0;
+    nodes.forEach((node){
+      node.getData() == name ? duplicates++ : null; 
+    });
+    duplicates > 0 ? print('$name is already in the graph.') : nodes.add(ADINode(name));
+  }
+  
+  void connectFriends({name: String, friends: List}){
+    friends.forEach((friend){
+      
+    })
+}
+*/
 class ADIGraph {
   List<int> relations = [];
   List<String> people = [];
