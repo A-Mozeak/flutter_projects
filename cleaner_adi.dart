@@ -10,7 +10,7 @@ class ADIGraph {
   //Add a person to the social graph.
   void addPerson({name: String}){
     if (isInGraph(input: name)) {
-      print('$name is already in the graph.');
+      throw Exception;
     }
     else {
       _relations.add(0);
@@ -42,6 +42,11 @@ class ADIGraph {
     
   }
   
+  void printNodes(){
+    for (String person in _people){
+      stdout.writeln(person);
+    };
+  }
   //Remove a person from another person's friends list.
 
   //Remove a person from the social graph, updating all of their friends.
@@ -53,16 +58,71 @@ class ADIGraph {
 
 }
 
+class Commands {
+  void printPeople({graph: ADIGraph}){
+    graph.printNodes();
+  }
+
+  void addToGraph({graph: ADIGraph}){
+    String candidate;
+    
+    stdout.write('\nWho would you like to add to the graph?\nName: ');
+    candidate = stdin.readLineSync();
+
+    try{
+      graph.addPerson(name: candidate);
+    } catch (e) {
+      stdout.write('$candidate is already a graph member.\n');
+    };
+    
+  }
+  
+  void addRelationship(){
+    //TODO
+  }
+  void removeFromGraph(){
+    //TODO
+  }
+  void removeRelationship(){
+    //TODO
+  }
+  void showMenu(){
+    stdout.write('\n\'a\': Add someone to the graph. \n\'c\': Connect friends to graph member. \n\'p\': Print graph members. \n\'r\': Remove someone from the graph. \n\'u\': Unfriend one person from another. \n\'m\': View this menu. \n\'q\': Quit the program.\n\n');
+  }
+}
+
 void main() {
   ADIGraph sanctum = new ADIGraph();
+  Commands menu = new Commands();
   String command;
 
   while (command != 'q') {
   
-  stdout.write('Welcome to the Social Graph. What would you like to do? \n(press \'l\' to list, \'a\' to add, \'r\' to remove, \'q\' to quit): ');
+  stdout.writeln('\n'+('-'*60));
+  stdout.write('Welcome to the Social Graph. What would you like to do? \n(enter \'m\' to view the menu and \'q\' to quit): ');
   command = stdin.readLineSync();
 
-  
+  switch (command) {
+    case 'a':
+      menu.addToGraph(graph: sanctum);
+      break;
+    case 'c':
+      menu.addRelationship();
+      break;
+    case 'm':
+      menu.showMenu();
+      break;
+    case 'p':
+      menu.printPeople(graph: sanctum);
+      break;
+    case 'r':
+      menu.removeFromGraph();
+      break;
+    case 'u':
+      menu.removeRelationship();
+      break;
+  }
+
 
   }
   /*
