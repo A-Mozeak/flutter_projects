@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'reusable_container.dart';
 import 'icon_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-const Color activeCardColor = Color(0xFF1D1E33);
-const Color inactiveCardColor = Color(0xFF111328);
-const Color pinkAccent = Color(0xFFEB1555);
+import 'constants.dart';
 
 enum Genders {
   male,
@@ -18,9 +15,10 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  Color maleCardColor = inactiveCardColor;
-  Color femaleCardColor = inactiveCardColor;
+  Color maleCardColor = kInactiveCardColor;
+  Color femaleCardColor = kInactiveCardColor;
   Genders selectedGender;
+  int height = 65;
 
   @override
   Widget build(BuildContext context) {
@@ -31,62 +29,111 @@ class _InputPageState extends State<InputPage> {
         ),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
             child: Row(
               children: <Expanded>[
                 Expanded(
-                  child: GestureDetector(
-                    onTap: () {
+                  child: ReusableContainer(
+                    shade: selectedGender == Genders.male
+                        ? kActiveCardColor
+                        : kInactiveCardColor,
+                    cardChild: IconWithText(
+                      iconData: FontAwesomeIcons.mars,
+                      assocText: 'MALE',
+                    ),
+                    interaction: () {
                       setState(() {
                         selectedGender = Genders.male;
                       });
                     },
-                    child: ReusableContainer(
-                      shade: selectedGender == Genders.male ? activeCardColor : inactiveCardColor,
-                      cardChild: IconWithText(
-                        iconData: FontAwesomeIcons.mars,
-                        assocText: 'MALE',
-                      ),
-                    ),
                   ),
                 ),
                 Expanded(
-                  child: GestureDetector(
-                    onTap: () {
+                  child: ReusableContainer(
+                    shade: selectedGender == Genders.female
+                        ? kActiveCardColor
+                        : kInactiveCardColor,
+                    cardChild: IconWithText(
+                      iconData: FontAwesomeIcons.venus,
+                      assocText: 'FEMALE',
+                    ),
+                    interaction: () {
                       setState(() {
                         selectedGender = Genders.female;
                       });
                     },
-                    child: ReusableContainer(
-                      shade: selectedGender == Genders.female ? activeCardColor : inactiveCardColor,
-                      cardChild: IconWithText(
-                        iconData: FontAwesomeIcons.venus,
-                        assocText: 'FEMALE',
-                      ),
-                    ),
                   ),
                 ),
               ],
             ),
           ),
           Expanded(
-            child: ReusableContainer(shade: activeCardColor),
+            child: ReusableContainer(
+              shade: kActiveCardColor,
+              cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'HEIGHT',
+                    style: kLabelStyle,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: <Widget>[
+                      Text(
+                        height.toString(),
+                        style: kNumberStyle,
+                      ),
+                      Text(
+                        'in',
+                        style: kLabelStyle,
+                      ),
+                    ],
+                  ),
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      activeTrackColor: Colors.white,
+                      inactiveTrackColor: Color(0xFF8D8E98),
+                      thumbColor: Color(0xFFEB1555),
+                      thumbShape:
+                          RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                      overlayShape:
+                          RoundSliderOverlayShape(overlayRadius: 30.0),
+                      overlayColor: Color(0x29EB1555),
+                    ),
+                    child: Slider(
+                      value: height.toDouble(),
+                      min: 55.0,
+                      max: 84.0,
+                      onChanged: (double newHeight) {
+                        setState(() {
+                          height = newHeight.round();
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
           Expanded(
             child: Row(
               children: <Expanded>[
                 Expanded(
-                  child: ReusableContainer(shade: activeCardColor),
+                  child: ReusableContainer(shade: kActiveCardColor),
                 ),
                 Expanded(
-                  child: ReusableContainer(shade: activeCardColor),
+                  child: ReusableContainer(shade: kActiveCardColor),
                 ),
               ],
             ),
           ),
           Container(
-            color: pinkAccent,
+            color: kPinkAccent,
             margin: EdgeInsets.only(top: 10.0),
             height: 80.0,
             width: double.infinity,
