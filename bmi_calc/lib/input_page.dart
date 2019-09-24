@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'reusable_container.dart';
+import 'custom_button.dart';
 import 'icon_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'constants.dart';
@@ -19,6 +20,8 @@ class _InputPageState extends State<InputPage> {
   Color femaleCardColor = kInactiveCardColor;
   Genders selectedGender;
   int height = 65;
+  int weight = 120;
+  int age = 18;
 
   @override
   Widget build(BuildContext context) {
@@ -124,19 +127,122 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: <Expanded>[
                 Expanded(
-                  child: ReusableContainer(shade: kActiveCardColor),
+                  child: ReusableContainer(
+                    shade: kActiveCardColor,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'WEIGHT',
+                          style: kLabelStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: <Widget>[
+                            Text(
+                              weight.toString(),
+                              style: kNumberStyle,
+                            ),
+                            Text(
+                              'lbs',
+                              style: kLabelStyle,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            RoundButtonThing(
+                              icon: FontAwesomeIcons.minus,
+                              interaction: () {
+                                setState(() {
+                                  weight--;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                            RoundButtonThing(
+                              icon: FontAwesomeIcons.plus,
+                              interaction: () {
+                                setState(() {
+                                  weight++;
+                                });
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ),
                 Expanded(
-                  child: ReusableContainer(shade: kActiveCardColor),
+                  child: ReusableContainer(
+                    shade: kActiveCardColor,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'AGE',
+                          style: kLabelStyle,
+                        ),
+                        Text(
+                          age.toString(),
+                          style: kNumberStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            RoundButtonThing(
+                              icon: FontAwesomeIcons.minus,
+                              interaction: () {
+                                setState(() {
+                                  age--;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                            RoundButtonThing(
+                              icon: FontAwesomeIcons.plus,
+                              interaction: () {
+                                setState(() {
+                                  age++;
+                                });
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
-          Container(
-            color: kPinkAccent,
-            margin: EdgeInsets.only(top: 10.0),
-            height: 80.0,
-            width: double.infinity,
+          GestureDetector(
+            onTap: (){
+              Navigator.pushNamed(context, '/results');
+            },
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'CALCULATE',
+                    style: TextStyle(fontSize: 23.0),
+                  ),
+                ],
+              ),
+              color: kPinkAccent,
+              margin: EdgeInsets.only(top: 10.0),
+              height: 80.0,
+              width: double.infinity,
+            ),
           ),
         ],
       ),
