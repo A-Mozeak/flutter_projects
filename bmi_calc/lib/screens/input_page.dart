@@ -1,9 +1,12 @@
+import 'package:bmi_calc/screens/results_page.dart';
 import 'package:flutter/material.dart';
-import 'reusable_container.dart';
-import 'custom_button.dart';
-import 'icon_text.dart';
+import 'package:bmi_calc/components/reusable_container.dart';
+import 'package:bmi_calc/components/custom_button.dart';
+import 'package:bmi_calc/components/icon_text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'constants.dart';
+import 'package:bmi_calc/constants.dart';
+import 'package:bmi_calc/components/bottom_button.dart';
+import 'package:bmi_calc/components/calculator_brain.dart';
 
 enum Genders {
   male,
@@ -224,26 +227,23 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          GestureDetector(
-            onTap: (){
-              Navigator.pushNamed(context, '/results');
-            },
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'CALCULATE',
-                    style: TextStyle(fontSize: 23.0),
+          BottomButton(
+              interaction: () {
+                CalculatorBrain calc =
+                    CalculatorBrain(height: height, weight: weight);
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ResultsPage(
+                      bmi: calc.calculate(),
+                      result: calc.getResult(),
+                      statement: calc.getStatement(),
+                    ),
                   ),
-                ],
-              ),
-              color: kPinkAccent,
-              margin: EdgeInsets.only(top: 10.0),
-              height: 80.0,
-              width: double.infinity,
-            ),
-          ),
+                );
+              },
+              title: 'CALCULATE'),
         ],
       ),
     );
