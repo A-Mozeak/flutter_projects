@@ -1,5 +1,0 @@
-----------TODO------------
-
-1. Get geolocator package.
-2. Add a function to get the user's location to the Loading Screen page.
-3. Get permission from the user to use their coarse location.
