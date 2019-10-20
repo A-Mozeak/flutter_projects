@@ -6,6 +6,13 @@ const String owmURL = 'https://api.openweathermap.org/data/2.5/weather';
 
 class WeatherModel {
 
+  Future<dynamic> getCityData(cityName) async {
+    NetworkHelper networkHelper = NetworkHelper(
+        '$owmURL?q=$cityName&appid=$apiKey&units=imperial');
+    var weatherData = await networkHelper.getData();
+    return weatherData;
+  }
+
   Future<dynamic> getWeatherData() async {
     Location myLocation = Location();
     await myLocation.getCurrentLocation();
